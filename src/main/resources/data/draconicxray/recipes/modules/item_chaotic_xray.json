@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_block"
+    },
+    "I": {
+      "item": "draconicevolution:chaotic_core"
+    },
+    "A": {
+      "item": "draconicxray:item_draconic_xray"
+    }
+  },
+  "pattern": [
+    "#I#",
+    "IAI",
+    "#I#"
+  ],
+  "result": {
+    "item": "draconicxray:item_chaotic_xray"
+  }
+}

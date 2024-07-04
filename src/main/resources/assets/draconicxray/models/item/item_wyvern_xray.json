@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "draconicevolution:item/module/wyvern",
+    "layer1": "draconicxray:module/wyvern_xray"
+  }
+}

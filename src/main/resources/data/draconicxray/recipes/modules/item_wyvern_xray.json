@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "I": {
+      "item": "draconicevolution:wyvern_core"
+    },
+    "A": {
+      "item": "draconicevolution:dragon_heart"
+    }
+  },
+  "pattern": [
+    "#I#",
+    "IAI",
+    "#I#"
+  ],
+  "result": {
+    "item": "draconicxray:item_wyvern_xray"
+  }
+}

@@ -1,0 +1,7 @@
+{
+ "module_type.draconicevolution.xray.name": "Xray",
+ "item.draconicxray.item_wyvern_xray": "Wyvern Xray Module",
+ "item.draconicxray.item_draconic_xray": "Draconic Xray Module",
+ "item.draconicxray.item_chaotic_xray": "Chaotic Xray Module",
+ "itemGroup.draconicxray.modules": "Draconic Xray Modules"
+}

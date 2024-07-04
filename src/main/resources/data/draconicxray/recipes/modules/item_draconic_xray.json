@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "I": {
+      "item": "draconicevolution:awakened_core"
+    },
+    "A": {
+      "item": "draconicxray:item_wyvern_xray"
+    }
+  },
+  "pattern": [
+    "#I#",
+    "IAI",
+    "#I#"
+  ],
+  "result": {
+    "item": "draconicxray:item_draconic_xray"
+  }
+}
