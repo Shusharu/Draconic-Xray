@@ -14,6 +14,8 @@ import com.ingresso.draconicxray.modules.data.XrayData;
 import com.ingresso.draconicxray.modules.entities.XrayEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -41,6 +43,8 @@ public class Draconic {
             .create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister
             .create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister
+            .create(ForgeRegistries.SOUND_EVENTS, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister
             .create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -87,6 +91,13 @@ public class Draconic {
                     })
                     .build()
     );
+    public static final RegistryObject<SoundEvent> XRAY_ACTIIVATION = SOUNDS.register(
+            "xray_activation",
+            () -> SoundEvent.createFixedRangeEvent(
+                    new ResourceLocation(MODID, "xray_activation"),
+                    16F
+            )
+    );
 
     public Draconic() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -94,6 +105,7 @@ public class Draconic {
         MODULES.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
+        SOUNDS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientHandler::setup);

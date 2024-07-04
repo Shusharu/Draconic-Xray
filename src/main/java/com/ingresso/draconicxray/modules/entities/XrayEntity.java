@@ -9,9 +9,12 @@ import com.brandon3055.draconicevolution.api.modules.lib.ModuleEntity;
 import com.brandon3055.draconicevolution.api.modules.lib.StackModuleContext;
 import com.brandon3055.draconicevolution.items.equipment.ModularPickaxe;
 import com.ingresso.draconicxray.Config;
+import com.ingresso.draconicxray.Draconic;
 import com.ingresso.draconicxray.modules.data.XrayData;
 import com.ingresso.draconicxray.xray.XrayController;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -57,6 +60,10 @@ public class XrayEntity extends ModuleEntity<XrayData> implements EntityOverride
                         ticks = module.getData().ticks();
                         XrayController.INSTANCE.toggleXRay();
                         storage.modifyEnergyStored(-(long) energy);
+                        var player = Minecraft.getInstance().player;
+                        var level = player.clientLevel;
+                        level.playSound(player, player.getX(), player.getY(), player.getZ(),
+                                Draconic.XRAY_ACTIIVATION.get(), SoundSource.PLAYERS, 1F, 1F);
                     }
                 });
             }

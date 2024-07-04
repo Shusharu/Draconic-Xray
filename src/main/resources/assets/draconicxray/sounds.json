@@ -1,0 +1,11 @@
+{
+  "xray_activation": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "draconicxray:xray_activation",
+        "stream": false
+      }
+    ]
+  }
+}
