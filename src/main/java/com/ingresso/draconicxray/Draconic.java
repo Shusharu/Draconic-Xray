@@ -51,7 +51,7 @@ public class Draconic {
     public static Function<Module<XrayData>, XrayData> xrayData(short ticks) {
         return e -> new XrayData(ticks);
     }
-    public static final ModuleType<XrayData> XRAY = new ModuleTypeImpl<>("xray", 1, 1,
+    public static final ModuleType<XrayData> XRAY = new ModuleTypeImpl<>("xray", 3, 3,
             XrayEntity::new, ModuleCategory.MINING_TOOL).setMaxInstallable(1);
     public static final RegistryObject<Module<?>> WYVERN_XRAY = MODULES.register("wyvern_xray",
             () -> new ModuleImpl<>(
