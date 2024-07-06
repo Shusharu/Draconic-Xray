@@ -3,6 +3,7 @@ package com.ingresso.draconicxray.xray;
 import com.ingresso.draconicxray.xray.data.RenderBlockWrapper;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -42,7 +43,7 @@ public class XrayController {
     }
 
     public int getRadius() {
-        return 80;
+        return LevelRenderer.CHUNK_SIZE * 2;
     }
 
     public void requestBlockFinder(boolean force) {
