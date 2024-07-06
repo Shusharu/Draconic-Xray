@@ -11,68 +11,64 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import org.joml.Matrix4f;
 
 public class Render {
+
     private static VertexBuffer vertexBuffer;
-    public static boolean requestedRefresh = false;
 
 	public static void renderBlocks(RenderLevelStageEvent event) {
-        if (vertexBuffer == null || requestedRefresh) {
-            requestedRefresh = false;
+        if (vertexBuffer == null) {
             vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+        }
+        Tesselator tessellator = Tesselator.getInstance();
+        BufferBuilder buffer = tessellator.getBuilder();
 
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder buffer = tessellator.getBuilder();
+        float opacity = 1F;
 
-            float opacity = 1F;
+        buffer.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
 
-            buffer.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        XrayController.INSTANCE.syncRenderList.forEach(blockProps -> {
+            if (blockProps == null) {
+                return;
+            }
 
-            XrayController.INSTANCE.syncRenderList.forEach(blockProps -> {
-                if (blockProps == null) {
-                    return;
-                }
+            final float size = 1.0f;
+            final double x = blockProps.pos().getX(), y = blockProps.pos().getY(), z = blockProps.pos().getZ();
 
-                final float size = 1.0f;
-                final double x = blockProps.pos().getX(), y = blockProps.pos().getY(), z = blockProps.pos().getZ();
+            final float red = (blockProps.color() >> 16 & 0xff) / 255f;
+            final float green = (blockProps.color() >> 8 & 0xff) / 255f;
+            final float blue = (blockProps.color() & 0xff) / 255f;
 
-                final float red = (blockProps.color() >> 16 & 0xff) / 255f;
-                final float green = (blockProps.color() >> 8 & 0xff) / 255f;
-                final float blue = (blockProps.color() & 0xff) / 255f;
-
-                LevelRenderer.renderLineBox(buffer, x, y, z, x + size, y + size, z + size,
-                        red, green, blue, opacity);
+            LevelRenderer.renderLineBox(buffer, x, y, z, x + size, y + size, z + size,
+                    red, green, blue, opacity);
 //                renderCuboid(buffer, (float) x, (float) y, (float) z, size, red, green, blue, opacity);
-            });
+        });
 
-            vertexBuffer.bind();
-            vertexBuffer.upload(buffer.end());
-            VertexBuffer.unbind();
-        }
+        vertexBuffer.bind();
+        vertexBuffer.upload(buffer.end());
+        VertexBuffer.unbind();
 
-        if (vertexBuffer != null) {
-            Vec3 view = Minecraft.getInstance().getEntityRenderDispatcher().camera.getPosition();
+        Vec3 view = Minecraft.getInstance().getEntityRenderDispatcher().camera.getPosition();
 
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
-                    GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            RenderSystem.disableDepthTest();
-            RenderSystem.disableCull();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.disableDepthTest();
+        RenderSystem.disableCull();
 
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
-            PoseStack matrix = event.getPoseStack();
-            matrix.pushPose();
-            matrix.translate(-view.x, -view.y, -view.z);
+        PoseStack matrix = event.getPoseStack();
+        matrix.pushPose();
+        matrix.translate(-view.x, -view.y, -view.z);
 
-            vertexBuffer.bind();
-            vertexBuffer.drawWithShader(matrix.last().pose(),
-                    new Matrix4f(event.getProjectionMatrix()), RenderSystem.getShader());
-            VertexBuffer.unbind();
-            matrix.popPose();
+        vertexBuffer.bind();
+        vertexBuffer.drawWithShader(matrix.last().pose(),
+                new Matrix4f(event.getProjectionMatrix()), RenderSystem.getShader());
+        VertexBuffer.unbind();
+        matrix.popPose();
 
-            RenderSystem.enableCull();
-            RenderSystem.enableDepthTest();
-            RenderSystem.disableBlend();
-        }
+        RenderSystem.enableCull();
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableBlend();
 	}
 
 //    public static void renderCuboid(BufferVertexConsumer buffer, float x, float y, float z,

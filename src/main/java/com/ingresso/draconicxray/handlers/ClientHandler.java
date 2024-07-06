@@ -11,14 +11,6 @@ public class ClientHandler {
 
     public static void setup() {
         MinecraftForge.EVENT_BUS.addListener(ClientHandler::onLevelRender);
-        MinecraftForge.EVENT_BUS.addListener(ClientHandler::clientTick);
-    }
-
-    public static void clientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && Minecraft.getInstance().player != null &&
-                Minecraft.getInstance().level != null) {
-            XrayController.INSTANCE.requestBlockFinder();
-        }
     }
 
     public static void onLevelRender(RenderLevelStageEvent event) {

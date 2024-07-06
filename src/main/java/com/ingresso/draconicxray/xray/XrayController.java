@@ -33,11 +33,11 @@ public class XrayController {
 
     public void toggleXRay() {
         if (!xrayActive) {
-            syncRenderList.clear();
-            xrayActive = true;
             requestBlockFinder();
+            xrayActive = true;
         } else {
             xrayActive = false;
+            syncRenderList.clear();
         }
     }
 
@@ -46,14 +46,9 @@ public class XrayController {
     }
 
     public void requestBlockFinder() {
-        if (isXRayActive()) {
-            Util.backgroundExecutor().execute(() -> {
-                Set<RenderBlockWrapper> c = OreBlockFinder.blockFinder();
-                syncRenderList.clear();
-                syncRenderList.addAll(c);
-
-                Render.requestedRefresh = true;
-            });
-        }
+        Util.backgroundExecutor().execute(() -> {
+            Set<RenderBlockWrapper> c = OreBlockFinder.blockFinder();
+            syncRenderList.addAll(c);
+        });
     }
 }
