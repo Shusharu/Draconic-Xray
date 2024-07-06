@@ -15,7 +15,6 @@ import java.util.Set;
 public class XrayController {
 
     public static XrayController INSTANCE = new XrayController();
-    private boolean isSearching = false;
     public final Set<RenderBlockWrapper> syncRenderList = Collections.synchronizedSet(new HashSet<>()); // this is accessed by threads
     public ArrayList<Block> blackList = new ArrayList<>() {{
         add(Blocks.AIR);
@@ -36,7 +35,7 @@ public class XrayController {
         if (!xrayActive) {
             syncRenderList.clear();
             xrayActive = true;
-            requestBlockFinder(true);
+            requestBlockFinder();
         } else {
             xrayActive = false;
         }
@@ -46,14 +45,12 @@ public class XrayController {
         return LevelRenderer.CHUNK_SIZE * 2;
     }
 
-    public void requestBlockFinder(boolean force) {
-        if (isXRayActive() && force && !isSearching) {
+    public void requestBlockFinder() {
+        if (isXRayActive()) {
             Util.backgroundExecutor().execute(() -> {
-                isSearching = true;
                 Set<RenderBlockWrapper> c = OreBlockFinder.blockFinder();
                 syncRenderList.clear();
                 syncRenderList.addAll(c);
-                isSearching = false;
 
                 Render.requestedRefresh = true;
             });

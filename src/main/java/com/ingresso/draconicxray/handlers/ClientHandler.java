@@ -17,7 +17,7 @@ public class ClientHandler {
     public static void clientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END && Minecraft.getInstance().player != null &&
                 Minecraft.getInstance().level != null) {
-            XrayController.INSTANCE.requestBlockFinder(true);
+            XrayController.INSTANCE.requestBlockFinder();
         }
     }
 
