@@ -14,14 +14,21 @@ public class Config {
     private static final ForgeConfigSpec.IntValue ENERGY_CONSUMPTION = BUILDER
             .comment("An energy that xray-mode will consume during the job")
             .defineInRange("energyConsumption", 4096, 0, Integer.MAX_VALUE);
+    private static final ForgeConfigSpec.IntValue SCAN_RADIUS = BUILDER
+            .comment("A radius scanning ore block's when xray-module works.\n" +
+                    "The value installs by count of chunks: 1 = 16 blocks around player")
+            .comment("Also not recommended using big values")
+            .defineInRange("", 2, 0, Integer.MAX_VALUE);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static int energyConsumption;
+    public static int scanRadius;
 
     @SubscribeEvent
     static void onLoad(ModConfigEvent event) {
         energyConsumption = ENERGY_CONSUMPTION.get();
+        scanRadius = SCAN_RADIUS.get();
     }
 
 }
