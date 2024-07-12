@@ -18,7 +18,7 @@ public class Config {
             .comment("A radius scanning ore block's when xray-module works.\n" +
                     "The value installs by count of chunks: 1 = 16 blocks around player")
             .comment("Also not recommended using big values")
-            .defineInRange("", 2, 0, Integer.MAX_VALUE);
+            .defineInRange("scanRadius", 2, 0, Integer.MAX_VALUE);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
