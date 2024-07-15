@@ -12,6 +12,7 @@ import com.brandon3055.draconicevolution.init.DEModules;
 import com.ingresso.draconicxray.handlers.ClientHandler;
 import com.ingresso.draconicxray.modules.data.XrayData;
 import com.ingresso.draconicxray.modules.entities.XrayEntity;
+import com.ingresso.draconicxray.network.NetworkHandler;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -107,6 +108,7 @@ public class Draconic {
         ITEMS.register(modEventBus);
         SOUNDS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
+        NetworkHandler.registerMessage();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientHandler::setup);
     }
