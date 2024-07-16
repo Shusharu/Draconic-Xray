@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-//    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 group = mod_group_id
@@ -73,7 +73,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-//    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("com:Draconic-evolution:${minecraft_version}-3.1.2.565:universal")
     implementation fg.deobf("com:codechickenlib:${minecraft_version}-4.4.0.509:universal")
     implementation fg.deobf("com:brandonscore:${minecraft_version}-3.2.1.302:universal")
