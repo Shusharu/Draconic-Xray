@@ -17,6 +17,9 @@ public class ClientHandler {
     }
 
     public static void onTickClient(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) {
+            return;
+        }
         if (XrayController.INSTANCE.isXRayActive()) {
             ticks--;
             if (ticks <= 0) {

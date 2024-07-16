@@ -13,7 +13,7 @@ public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     private static final ForgeConfigSpec.IntValue ENERGY_CONSUMPTION = BUILDER
             .comment("An energy that xray-mode will consume during the job")
-            .defineInRange("energyConsumption", 4096, 0, Integer.MAX_VALUE);
+            .defineInRange("energyConsumption", 24_576, 0, Integer.MAX_VALUE);
     private static final ForgeConfigSpec.IntValue SCAN_RADIUS = BUILDER
             .comment("A radius scanning ore block's when xray-module works.\n" +
                     "The value installs by count of chunks: 1 = 16 blocks around player")

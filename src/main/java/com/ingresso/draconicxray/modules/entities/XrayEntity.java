@@ -4,6 +4,7 @@ import com.brandon3055.brandonscore.api.power.IOPStorage;
 import com.brandon3055.draconicevolution.api.capability.DECapabilities;
 import com.brandon3055.draconicevolution.api.modules.Module;
 import com.brandon3055.draconicevolution.api.modules.lib.EntityOverridesItemUse;
+import com.brandon3055.draconicevolution.api.modules.lib.ModuleContext;
 import com.brandon3055.draconicevolution.api.modules.lib.ModuleEntity;
 import com.brandon3055.draconicevolution.items.equipment.ModularPickaxe;
 import com.ingresso.draconicxray.Config;
@@ -31,20 +32,19 @@ public class XrayEntity extends ModuleEntity<XrayData> implements EntityOverride
                 useEvent.getEntity() instanceof ServerPlayer player &&
                 event.getItemStack().getItem() instanceof ModularPickaxe
         ) {
-            if (!XrayController.INSTANCE.isXRayActive()) {
-                ItemStack stack = useEvent.getItemStack();
-                LazyOptional<IOPStorage> optional = stack.getCapability(DECapabilities.OP_STORAGE);
-                optional.ifPresent(storage -> {
-                    int techLevel = module.getModuleTechLevel().index;
-                    int energy = Config.energyConsumption * techLevel;
-                    if (storage.getOPStored() > energy) {
-                        int ticks = module.getData().ticks();
-                        NetworkHandler.sendToPlayer(() -> player, new S2CXrayStarter(ticks));
-                        player.playSound(Draconic.XRAY_ACTIIVATION.get(), 1F, 1F);
-                        storage.modifyEnergyStored(-(long) energy);
-                    }
-                });
-            }
+            ItemStack stack = useEvent.getItemStack();
+            LazyOptional<IOPStorage> optional = stack.getCapability(DECapabilities.OP_STORAGE);
+            optional.ifPresent(storage -> {
+                int techLevel = module.getModuleTechLevel().index;
+                int energy = Config.energyConsumption * techLevel;
+                if (storage.getOPStored() > energy) {
+                    int ticks = module.getData().ticks();
+                    NetworkHandler.sendToPlayer(() -> player, new S2CXrayStarter(ticks));
+                    player.getCooldowns().addCooldown(stack.getItem(), ticks);
+                    player.playSound(Draconic.XRAY_ACTIIVATION.get(), 1F, 1F);
+                    storage.modifyEnergyStored(-(long) energy);
+                }
+            });
         }
     }
 
